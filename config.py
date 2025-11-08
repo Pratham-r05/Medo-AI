@@ -91,10 +91,10 @@ class MediLensConfig:
     AUTO_DOWNLOAD_MODELS = False  # Models already downloaded persist permanently in Ollama
     ESSENTIAL_MODELS = ["gemma2:2b", "qwen2:1.5b", "llava:7b"]  # Optimized for laptop performance
 
-    # Medical Response Parameters - Optimized for Gemma2:2B laptop performance
-    DEFAULT_TEMPERATURE = 0.3   # Precise medical accuracy
-    DEFAULT_MAX_TOKENS = 520     # Balanced responses (slight reduction for speed)
-    CHAT_TEMPERATURE = 0.3       # Focused, detailed medical responses
+        # Medical Response Parameters - Optimized for GPT-OSS 20B superior medical accuracy
+    DEFAULT_TEMPERATURE = 0.2   # Very precise medical accuracy (GPT-OSS 20B benefits from lower temp)
+    DEFAULT_MAX_TOKENS = 2000   # Extended token limit for comprehensive responses
+    CHAT_TEMPERATURE = 0.2      # Highly focused, detailed medical responses
     OCR_TEMPERATURE = 0.2        # Precise document analysis
     VISION_TEMPERATURE = 0.2     # Precise vision analysis
 
