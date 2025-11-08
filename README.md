@@ -1,387 +1,183 @@
-# 🏥 MediLens - AI Medical Assistant
+# 🏥 Medo-AI — Offline Medical Assistant
 
-> **Private, Offline Medical AI Assistant** for symptom analysis, document processing, and image triage
+> A privacy-first, local AI assistant for symptom triage, clinical image review, and medical document interpretation. Runs with Ollama models and a Streamlit interface.
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://your-app-url.streamlit.app)
 ![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-## 🚀 Quick Demo
+## Live demo (if deployed)
 
-**Try the live app**: [MediLens on Streamlit Community](https://your-deployed-url.streamlit.app)
+Try a hosted demo (when available): https://your-deployed-url.streamlit.app
 
-![MediLens Demo](f650c04eef1b4bf428e9.png)
-
----
-
-## ✨ Features
-
-### 💬 **Medical Chat Assistant**
-- **Optimized AI Model** - Uses Gemma2:2b for ultra-fast responses (10-20 seconds)
-- **Structured medical guidance** with organized sections and **bold formatting**
-- **Indian medication recommendations** with detailed dosage tables
-- **Context-aware emergency detection** for urgent symptoms
-- **Maximum performance** with optimized prompts and balanced resource usage
-
-### 📄 **Medical Document Analysis**
-- Upload **lab reports, prescriptions, medical documents**
-- **OCR text extraction** from PDFs and images
-- **Critical value highlighting** with color-coded thresholds
-- **Comprehensive interpretation** with actionable recommendations
-
-### 🖼️ **Medical Image Analysis**
-- **Visual assessment** of wounds, rashes, injuries
-- **Emergency indicator detection** with red-flag alerts
-- **Care recommendations** and follow-up guidance
-- **Professional medical formatting** with clinical observations
+![Medo-AI Demo](f650c04eef1b4bf428e9.png)
 
 ---
 
-## 🎯 For Streamlit Community Deployment
+## What Medo-AI does
 
-### **Deployment Ready!**
-This app is optimized for **Streamlit Community Cloud** deployment with:
-- ✅ **No external dependencies** - pure Streamlit + Python
-- ✅ **Lightweight models** compatible with cloud hosting
-- ✅ **Clean repository** with proper `.gitignore`
-- ✅ **Requirements.txt** for easy dependency management
+Medo-AI is built to give rapid, structured medical guidance locally on your machine. It combines a Streamlit front end with Ollama-powered local models to provide:
 
-### **Deploy Instructions**
+- Conversational symptom assessment and first-aid guidance.
+- OCR extraction and interpretation of lab reports, prescriptions, and PDFs.
+- Clinical image triage (wounds, rashes, burns) with urgency indicators.
+- Local-only inference to keep patient data private (no default external API calls).
 
-1. **Fork this repository**
-2. **Connect to Streamlit Community**: https://share.streamlit.io
-3. **Deploy**: Select your forked repo → Deploy!
-4. **Configure**: The app will automatically handle model downloads
+The repository contains the Streamlit app (app.py), model/config settings (config.py), and modular services under services/.
 
 ---
 
-## 🏗️ Local Development Setup
+## Highlights
 
-### **Prerequisites**
-- **Python 3.8+** ([Download here](https://www.python.org/downloads/))
-- **8GB RAM minimum** (16GB recommended)
-- **Ollama** for AI models ([Installation guide below](#ollama-installation))
+- Conversational assistant with structured responses: likely causes, immediate steps, and escalation criteria.
+- Document intelligence: OCR, abnormal-value highlighting, and plain-language summaries.
+- Image triage: urgency scoring, care recommendations, and vision-model support for richer output.
+- Safety guard: automatic red-flag detection and escalation suggestions.
+- Privacy-first: default on-device processing using Ollama.
 
-### **Step-by-Step Installation**
+---
 
-#### 1️⃣ Install Ollama (AI Engine)
+## Quick start — Local
 
-**Windows:**
-```bash
-# Download and run the installer
-# Visit: https://ollama.com/download/windows
-# Or use winget
+Prerequisites
+
+- Python 3.8+
+- Ollama installed and on PATH
+- 8GB RAM minimum (16GB recommended for vision models)
+- Optional: Tesseract OCR for improved document parsing
+
+1) Install Ollama
+
+Windows
+```
+# via winget
 winget install Ollama.Ollama
+# or grab installer from https://ollama.com/download
 ```
 
-**macOS:**
-```bash
-# Install via Homebrew
+macOS
+```
 brew install ollama
-
-# Or download from https://ollama.com/download/mac
+# or download from https://ollama.com/download
 ```
 
-**Linux:**
-```bash
-# Install via curl
+Linux
+```
 curl -fsSL https://ollama.com/install.sh | sh
 ```
 
-#### 2️⃣ Install AI Models
+Restart your terminal after installation so `ollama` is available in PATH.
 
-After installing Ollama, open a new terminal and run:
+2) Pull recommended models (adjust for your hardware)
 
-```bash
-# Install PRIMARY model - ultra-fast with excellent medical accuracy (1.6 GB) - RECOMMENDED
-ollama pull gemma2:2b
-
-# Install optional fallback model
-ollama pull qwen2:1.5b     # Ultra-fast fallback (934 MB)
-
-# Install vision model for image analysis (4.7 GB)
-ollama pull llava:7b
+```
+ollama pull gemma2:2b     # Recommended primary model (fast & compact)
+ollama pull qwen2:1.5b    # Lightweight fallback
+ollama pull llava:7b      # Optional: vision-capable model for image analysis
 ```
 
-**Note**: Models will download in the background. The app uses **Gemma2:2b by default** for optimal speed (10-20s responses) while maintaining excellent medical accuracy. Download time: 2-5 minutes depending on internet speed.
+3) Clone repo & install Python deps
 
-#### 3️⃣ Clone & Setup Application
-
-```bash
-# Clone the repository
-git clone https://github.com/TashonBraganca/Medicio-Ai.git
-cd Medicio-Ai
-
-# Install Python dependencies
+```
+git clone https://github.com/Pratham-r05/Medo-AI.git
+cd Medo-AI
 pip install -r requirements.txt
 ```
 
-#### 4️⃣ (Optional) Install Tesseract OCR
+4) (Optional) Install Tesseract OCR
 
-For document scanning capabilities:
-
-**Windows:**
-```bash
-# Download installer from:
-# https://github.com/UB-Mannheim/tesseract/wiki
-# Install and add to PATH
+Windows: download UB Mannheim build and add to PATH.
+macOS:
 ```
-
-**macOS:**
-```bash
 brew install tesseract
 ```
-
-**Linux:**
-```bash
+Linux:
+```
 sudo apt-get install tesseract-ocr
 ```
 
-#### 5️⃣ Run the Application
+5) Run the application
 
-```bash
-# Start the app
+```
 streamlit run app.py
 ```
 
-The app will automatically open in your browser at `http://localhost:8501`
-
-### **Verify Installation**
-
-Check that everything is working:
-
-```bash
-# Check Ollama is running
-ollama list
-
-# Expected output:
-# NAME            ID          SIZE    MODIFIED
-# gemma2:2b       ...         1.6 GB  ...
-# qwen2:1.5b      ...         934 MB  ...
-# llava:7b        ...         4.7 GB  ...
-```
-
-### **Troubleshooting**
-
-**Issue: "Ollama not found"**
-- Restart your terminal after installing Ollama
-- Verify Ollama is in your PATH: `which ollama` (Mac/Linux) or `where ollama` (Windows)
-
-**Issue: "Model not found"**
-- Ensure models are downloaded: `ollama list`
-- Re-pull model if needed: `ollama pull gemma2:2b`
-
-**Issue: "Port already in use"**
-- The app will try alternate ports automatically
-- Or manually specify: `streamlit run app.py --server.port 8502`
+Open http://localhost:8501 (Streamlit may choose another free port if 8501 is busy).
 
 ---
 
-## 🧠 AI Models & Performance
+## Configuration & customization
 
-### **Speed-Optimized Model Strategy**
-| Model | Purpose | Size | Medical Accuracy | Speed | Status |
-|-------|---------|------|------------------|-------|--------|
-| **Gemma2:2b** 👑 | Primary Medical Chat | 2B params | ⭐⭐⭐⭐ | ⚡⚡⚡⚡⚡ (10-20s) | Default |
-| **Qwen2:1.5b** | Ultra-Fast Fallback | 1.5B params | ⭐⭐⭐⭐ | ⚡⚡⚡⚡⚡ (8-15s) | Fallback |
-| **LLaVA:7b** | Image Analysis | 7B params | ⭐⭐⭐⭐⭐ | ⚡⚡⚡ (60-90s) | Vision |
-
-### **Performance Optimizations**
-- 🚀 **Ultra-fast responses** - Gemma2:2b optimized for 10-20 second responses
-- ⚡ **Balanced resource usage** - Optimal thread count (4 threads) prevents CPU overload
-- 🎯 **One-shot learning prompts** - Example-based prompts ensure perfect output format
-- 📊 **Structured responses** with Indian medicines in detailed dosage tables
-- 💊 **Real medical advice** - No template echoing, actual symptom-based guidance
-- 🔄 **Smart fallback** - Automatic model switching if primary unavailable
+- Edit config.py to change default model names, thresholds, or prompt templates.
+- The app will try the primary model and fall back automatically if not available.
+- Enable vision features only if you have a vision-capable model and sufficient memory.
 
 ---
 
-## 📱 User Interface
+## Project layout
 
-### **Modern Medical Design**
-- 🎨 **Dark medical theme** with professional styling
-- 📱 **Responsive design** for desktop and mobile
-- 🔄 **Real-time chat** with streaming responses
-- 📋 **Structured output** with medical formatting
-
-### **Key UI Features**
-- **Searchable model selection** - Find and switch between AI models instantly
-- **Active model indicator** - Real-time display of current model in use
-- **Streamlit native sidebar** - Smooth collapse/expand functionality
-- **Bold formatting** - Key topics and medications highlighted for easy scanning
-- **Indian medication tables** - Detailed dosage, timing, and purpose
-- **File upload** with drag-and-drop support
-- **Color-coded alerts** for emergency indicators
-- **No disclaimers** - Clean, focused medical responses
+- app.py — Streamlit UI and flow control
+- config.py — model names, prompt text, and thresholds
+- requirements.txt — Python dependencies
+- services/
+  - chat_service.py — LLM chat handling and formatting
+  - document_service.py — OCR and PDF parsing utilities
+  - vision_service.py — image preprocessing and vision model integration
+  - safety_guard.py — red-flag detection and scope checks
+- f650c04eef1b4bf428e9.png — demo screenshot used in README
 
 ---
 
-## 🏥 Medical Capabilities
+## Troubleshooting
 
-### **Symptom Analysis**
-```
-Example: "I have a headache and fever"
-
-Output:
-🔍 Likely Causes:
-• Tension headache from stress/dehydration
-• Viral infection with systemic symptoms
-• Migraine with associated symptoms
-
-⚡ What To Do Now:
-• Apply cold compress to forehead
-• Rest in quiet, dark room
-• Stay hydrated with water
-• Take over-the-counter pain reliever
-
-🚨 See Doctor If:
-• Sudden severe headache with stiff neck
-• Fever above 102°F (39°C)
-• Confusion or vision changes
-```
-
-### **Document Analysis**
-- **Lab Reports**: Blood work, urinalysis, cholesterol panels
-- **Prescriptions**: Medication analysis and interactions
-- **Medical Records**: Hospital discharge summaries
-- **Test Results**: Radiology, pathology reports
-
-### **Image Assessment**
-- **Wounds & Injuries**: Cuts, bruises, burns assessment
-- **Skin Conditions**: Rashes, moles, irritations
-- **Emergency Triage**: Immediate care determination
-- **Follow-up Guidance**: Monitoring and care instructions
+- "ollama: command not found": ensure Ollama is installed and PATH updated; restart terminal.
+- "Model not listed": run `ollama list` and re-pull models with `ollama pull <model>`.
+- Streamlit port conflict: run with `streamlit run app.py --server.port <PORT>`.
+- Poor OCR results: confirm Tesseract is installed and language packs are present.
 
 ---
 
-## 🔧 Technical Architecture
+## Safety, privacy & limitations
 
-### **Core Components**
-```
-medilens/
-├── app.py                    # Main Streamlit application
-├── config.py                 # AI models & prompts configuration
-├── requirements.txt          # Python dependencies
-├── services/
-│   ├── chat_service.py       # Medical chat with Ollama
-│   ├── document_service.py   # OCR & document processing
-│   ├── vision_service.py     # Image analysis
-│   └── safety_guard.py       # Medical scope validation
-└── README.md                 # Documentation
-```
+- Medo-AI is an assistive tool and not a replacement for clinical judgement.
+- Always escalate suspected life-threatening conditions to emergency services.
+- The default configuration prefers local processing; if you add integrations that transmit data off-device, review privacy implications carefully.
 
-### **Technology Stack**
-- **Frontend**: Streamlit with custom CSS/JavaScript
-- **AI Engine**: Ollama with local model inference
-- **Image Processing**: OpenCV, Pillow
-- **OCR**: Tesseract (optional)
-- **Document**: PyPDF2, pandas
-- **Deployment**: Streamlit Community Cloud ready
+Important: This software is for informational use only and is not a medical device. Consult licensed healthcare professionals for diagnosis and treatment.
 
 ---
 
-## 🛡️ Safety & Privacy
+## Contributing
 
-### **Medical Safety**
-- ⚠️ **Emergency detection** for urgent symptoms
-- 🏥 **Professional disclaimers** on all medical advice
-- 📋 **Structured responses** following medical guidelines
-- 🔍 **Evidence-based recommendations** with action items
+Contributions are welcome. Ways to help:
 
-### **Privacy First**
-- 🔒 **100% local processing** - no external API calls
-- 💻 **On-device inference** with Ollama
-- 🚫 **No data logging** or external transmission
-- 🔐 **HIPAA-conscious design** for medical data
+- Improve medical prompts and accuracy
+- Add localization and language support
+- Enhance vision pipelines and labeling
+- Add tests, CI, and packaging
+
+Open issues or PRs on GitHub; refer to CONTRIBUTING.md if present.
 
 ---
 
-## 📊 Performance Metrics
+## Dependencies
 
-### **Response Times**
-- **Medical Chat**: 10-20 seconds average (Gemma2:2b optimized)
-- **Document Analysis**: 30-40 seconds
-- **Image Analysis**: 60-90 seconds
-- **Model Loading**: Instant (persistent server)
-
-### **Accuracy Metrics**
-- **Medical Scope Detection**: 95%+ accuracy
-- **Emergency Recognition**: Red-flag symptom alerts
-- **Structured Output**: 7-section medical format
-- **Follow-up Guidance**: Evidence-based recommendations
+See requirements.txt for pinned versions. Typical packages include streamlit, opencv-python, Pillow, pytesseract, PyPDF2, pandas, and numpy.
 
 ---
 
-## 🚀 Deployment Options
+## Support
 
-### **1. Streamlit Community Cloud** (Recommended)
-```bash
-# Automatic deployment from GitHub
-# Perfect for sharing and demo purposes
-# URL: https://your-app.streamlit.app
-```
-
-### **2. Local Development**
-```bash
-git clone https://github.com/TashonBraganca/Medicio-Ai.git
-cd Medicio-Ai
-pip install -r requirements.txt
-streamlit run app.py
-```
-
-### **3. Docker Deployment**
-```dockerfile
-# Docker support available
-# Contact for enterprise deployment
-```
+- Report bugs or request features via GitHub Issues.
+- Streamlit community forum for deployment questions.
+- Check IMPROVEMENTS.md for ideas and roadmap notes.
 
 ---
 
-## 🤝 Contributing
+## License
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-### **Areas for Contribution**
-- 🩺 Medical prompt optimization
-- 🖼️ Enhanced image analysis models
-- 📱 Mobile UI improvements
-- 🚀 Performance optimizations
+MIT — see the LICENSE file for details.
 
 ---
 
-## 📋 Requirements
-
-```txt
-streamlit>=1.28.0
-requests>=2.31.0
-opencv-python>=4.8.0.74
-Pillow>=10.0.0
-pytesseract>=0.3.10
-PyPDF2>=3.0.1
-numpy>=1.24.3
-pandas>=2.0.3
-```
-
----
-
-## 📞 Support
-
-- **GitHub Issues**: [Report bugs or request features](https://github.com/TashonBraganca/Medicio-Ai/issues)
-- **Streamlit Community**: [Deployment help](https://discuss.streamlit.io)
-- **Documentation**: Comprehensive guides in `/docs`
-
----
-
-## ⚖️ Legal Disclaimer
-
-**IMPORTANT MEDICAL DISCLAIMER**: This application provides AI-powered medical information for educational and informational purposes only. It is not intended to replace professional medical advice, diagnosis, or treatment. Always consult qualified healthcare providers for medical decisions. In case of medical emergencies, contact emergency services immediately.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-**Made with ❤️ for the medical community** | **Powered by Streamlit & Ollama**
+Built with a focus on local-first, privacy-preserving medical AI — powered by Streamlit & Ollama.
